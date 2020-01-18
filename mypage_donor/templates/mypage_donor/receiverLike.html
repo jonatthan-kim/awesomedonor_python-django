@@ -1,0 +1,55 @@
+{% extends 'mypage_donor/sidemenu.html' %}
+
+{% block title %}
+관심기관목록
+{% endblock %}
+
+{% block extra-style %}
+    {{ block.super }}
+	#tableSize{
+		width:780px;
+	}
+{% endblock %}
+
+{% block extra-script %}
+	function goRequest(){
+
+		var isConfirm = confirm('해당 기관이 요청한 기부 요청 검색창으로 이동하시겠습니까?');
+		if(isConfirm){
+			return true;
+		}else{
+			return false;
+		}
+	}
+{% endblock %}
+
+{% block content %}
+<div class="col-8">
+		<div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+            <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 500px; border: 4px solid #B4A8A1; ">
+            <div id="tablebox" style="width: 800px; height: 450px; margin: 25px 10px 10px 25px;">
+            	<table class="table" id="tableSize" style="font-size: 12px; color:#736663; text-align: center;">
+                            <thead style="background-color: #80716817">
+                                <tr>
+                                    <th style=" font-size: 13px; color:#736663; ">관심기관 명</th>
+                                    <th style=" font-size: 13px; color:#736663; ">관심기관 주소</th>
+                                    <th style=" font-size: 13px; color:#736663; ">기부요청 현황</th>
+                                    <th style=" font-size: 13px; color:#736663; ">관심 취소</th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow:scroll">
+								{% for object in object_list %}
+									<tr>
+                                    	<td scope="row"><a href="{% url 'requestlist:FilterByReceiver' object.receiver.user.id %}" onclick="return goRequest()">{{ object.receiver.name }}</a></td>
+                                    	<td>{{ object.receiver.ad_category }} {{ object.receiver.ad_detail }}</td>
+                                    	<td>{{ object.receiver.donationrequest_set.all|length }}</td>
+                                    	<td><a class="btn btn-primary" href="{% url 'mypage_donor:delete_receiverlike' object.id %}" role="button">❤︎︎</a></td>
+                               		</tr>
+								{% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+            </div>
+            </div>
+</div>
+{% endblock %}

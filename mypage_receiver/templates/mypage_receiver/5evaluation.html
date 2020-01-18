@@ -1,0 +1,89 @@
+{% extends 'mypage_receiver/sidemenu.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block style %}
+{{ block.super }}
+	#formframe {
+
+    width: 768px;
+    height: 532px;
+    background-color: #DBD7D0;
+    border-radius: 5px 5px 5px 5px;
+	}
+{% endblock %}
+
+{% block extra-script %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="col-9" id="right">
+			    <form action="{% url 'mypage_receiver:write_evaluation'%}" method="POST">
+                    {% csrf_token %}
+			        <div id="formframe">
+			                <div class="row">
+			                    <div class="col">
+			                        <p style="text-align: center; color:#807168; font-size: 18px; margin: 20px 0px 20px 0px;">후원자님의 후원에 만족하셨나요?</br>후원 과정에 대한 전반적인 만족도를 평가해주세요!</p>
+			                    </div>
+			                </div>
+
+			                <!--후원 점수 데이터_5점척도-->
+			                <div class="row">
+			                    <div class="col">
+			                        <div class="form-group" style="width: 580px; align-content: center; margin: 0px 0px 20px 160px;">
+			                            <div class="form-check form-check-inline">
+			                                <input class="form-check-input" type="radio" name="starNumber" id="inlineRadio1" value="1">
+			                                <label class="form-check-label" for="inlineRadio1" style="font-size: 15px; color: #736663;">매우 불만족</label>
+			                            </div>
+			                                <div class="form-check form-check-inline">
+			                                    <input class="form-check-input" type="radio" name="starNumber" id="inlineRadio2" value="2">
+			                                    <label class="form-check-label" for="inlineRadio2" style="font-size: 15px; color: #736663;">약간 불만족</label>
+			                                </div>
+			                                <div class="form-check form-check-inline">
+			                                    <input class="form-check-input" type="radio" name="starNumber" id="inlineRadio3" value="3" checked>
+			                                    <label class="form-check-label" for="inlineRadio3" style="font-size: 15px; color: #736663;">보통</label>
+			                                </div>
+			                                <div class="form-check form-check-inline">
+			                                    <input class="form-check-input" type="radio" name="starNumber" id="inlineRadio4" value="4">
+			                                    <label class="form-check-label" for="inlineRadio4" style="font-size: 15px; color: #736663;">약간 만족</label>
+			                                </div>
+			                                <div class="form-check form-check-inline">
+			                                    <input class="form-check-input" type="radio" name="starNumber" id="inlineRadio5" value="5">
+			                                    <label class="form-check-label" for="inlineRadio5" style="font-size: 15px; color: #736663;">매우 만족</label>
+			                                </div>
+			                        </div>
+			                    </div>
+			                </div>
+
+			                <!--비고 텍스트 작성-->
+			                <div class="row">
+			                    <div class="col">
+			                        <div class="form-group" style="margin: 0px 30px 20px 30px;">
+			                            <textarea placeholder="구체적인 후기를 적어주세요 :D" class="form-control" name = note id="exampleFormControlTextarea1" rows="10" cols="50"></textarea>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="row">
+			                    <div class="col-4"></div>
+			                    <div class="col-4"></div>
+			                    <div class="col-4">
+			                        <div class="form-group">
+			                        <div class = row>
+			                        <input type = hidden name = id value = "{{ object.id }}">
+			                       		<button type="submit" value="작성완료" class="btn btn-outline-secondary" style="float: right; margin: 0px 30px 0px 0px;">작성완료</button>
+			                            <a href = "./closeWindow?Donation_Action_idx=${donation_Action_idx}&complete=${complete}" class="btn btn-outline-secondary">창 닫기</a>
+			                        </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			    </form>
+	        </div>
+    <div class="col-1"></div>
+</div>
+{% endblock %}

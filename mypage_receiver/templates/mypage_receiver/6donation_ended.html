@@ -1,0 +1,53 @@
+{% extends 'mypage_receiver/sidemenu.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block extra-script %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="col-9" id="right">
+	            <div id="upborder" style=" margin: 30px 0px 0px 0px; width: 870px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+	            <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 870px; height: 500px; border: 4px solid #B4A8A1; ">
+	            <div id="tablebox" style="width: 820px; height: 450px; margin: 25px 10px 10px 25px; color:#736663;">
+	            <div class="col text-center"><h4>후원 완료 내역</h4></div>
+	            <div class = col id = wrapper style = "width : 100%; height : 420px; overflow:scroll;">
+	            <table class="table table-sm" style="font-size: 12px; color:#736663; text-align: center;">
+	                <thead style=" background-color: #80716817">
+	                    <tr>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">완료/중지</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">신청 물품</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">수량</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">신청날짜</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">기부자이름</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">이메일</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">기부예정일</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                		{% for object in object_list %}
+								<tr>
+									<th scope = row>{{ object.completed }}</th>
+									<td>{{ object.donationRequest.minorCategory }}</td>
+									<td>{{ object.donationRequest.amount }}</td>
+									<td>{{ object.donationRequest.writeDate }}</td>
+									<td>{{ object.donor.name }}</td>
+									<td>{{ object.donor.user.username }}</td>
+									<td>{{ object.meetingDate }}</td>
+								</tr>
+							{% endfor %}
+	                </tbody>
+	            </table>
+	            </div>
+	            </div>
+	            </div>
+    </div>
+    <div class="col-1"></div>
+
+</div>
+{% endblock %}

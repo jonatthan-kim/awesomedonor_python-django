@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+#logo {
+    margin: 10px 0px 0px 0px;
+    width: 128px;
+    height: 75px;
+    background-color: ;
+}
+
+#login {
+    text-align: center;
+    margin: 55px 40px 0px 0px;
+    font-size: 14px;
+    background-color: ;
+}
+
+#menubar {
+    width: 100%;
+    height: 60px;
+    background-color: ;
+    position: relative;
+    margin: 0px 0px 0px 10px;
+}
+
+.nav-item {
+    line-height: 50px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: 0 auto;
+}
+
+
+#blank{
+   height : 20px;
+}
+

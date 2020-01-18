@@ -1,0 +1,129 @@
+{% extends 'mypage_receiver/sidemenu.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block extra-script %}
+    function goBack(){
+    	history.go(-1);
+    }
+{% endblock %}
+
+{% block content %}
+<div class="col-9" id="right">
+				<div id="upborder" style=" margin: 30px 0px 0px 0px; width: 700px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+		    	<div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 700px; background-color: #DBD7D0; height: 650px; border: 4px solid #B4A8A1; ">
+		    		<div id="tablebox" style="width: 650px; height: 600px; margin: 25px 10px 10px 25px; text-align: left;">
+		    			<div class = "row">
+		    				<div class = "col-1"></div>
+		    				<div class = "col-5"><strong><h5>회원정보 자세히보기</h5></strong></div>
+		    				<div class = "col-4"></div>
+    						<div class = "col-2"><button class = "btn btn-secondary btn-sm" onclick = "goBack()" >목록</button></div>
+    					</div>
+		    			<br>
+		    			<div class = "row">
+							<div class = col-1></div>
+		    				<div class = col-2>아이디</div>
+		    				<div class = col-6>
+		    					<div class="form-control" id="amount" placeholder="" disabled>
+		    					{{ object.donor.user.username }}
+		    					</div>
+		    				</div>
+		    				<div class = col-4></div>
+		    			</div>
+		    			<div class = "row">
+		    				<div class = col-1></div>
+		    				<div class = col-2>회원이름</div>
+		    				<div class = col-4>
+		    					<div class="form-control" id="amount" placeholder="" disabled>
+		    					{{ object.donor.name }}
+		    					</div>
+		    				</div>
+		    				<div class = col-5></div>
+		    			</div>
+		    			<div class = "row">
+							<div class = col-1></div>
+		    				<div class = col-2>연락처 </div>
+		    				<div class = col-6>
+		    					<div class="form-control" id="amount" placeholder="" disabled>
+		    					{{ object.contactNumber }}
+		    					</div>
+		    				</div>
+		    				<div class = col-3></div>
+		    			</div>
+		    			<br>
+		    			<div class = "row">
+							<div class = col-1></div>
+		    				<div class = col-3>방문가능날짜 </div>
+		    				<div class = col-5>
+		    					<div class="form-control" id="amount" placeholder="" disabled>
+		    					{{ object.meetingDate }}
+		    					</div>
+		    				</div>
+		    				<div class = col-3></div>
+		    			</div>
+		    			<br>
+		    		<div class = row style="text-align:center;">
+		    			<div class = col-4></div>
+		    			<div class = col-4><h5>평가</h5></div>
+		    			<div class = col-4></div>
+		    		</div>
+		    		<div class = "row">
+    				<div class = col-2></div>
+    				<div class = col-3>
+    				<div class = row>
+    					<div class = col-6>별점<br>평균</div>
+    					<div class = col-6>
+    						<div class="form-control" id="amount" placeholder="" disabled>
+    							{{ avg }}
+    						</div>
+    					</div>
+
+    				</div>
+    				</div>
+    				<div class = col-5>
+    				<div class = row>
+    					<div class = col-6>어썸지수<br>(기부물품총량)</div>
+    					<div class = col-6>
+    						<div class="form-control" id="amount" placeholder="" disabled>
+    							{{ awesome }}
+    						</div>
+    					</div>
+    				</div>
+    				</div>
+    				<div class = col-2></div>
+    			</div>
+
+		    			<div class="row">
+		    				<div class="col-1"></div>
+		                    <div class="col-10" style = "overflow:scroll; height: 200px; border: 1px dotted brown;" >
+		                    <br>
+								{% for evaluation in object.donor.donorevaluation_set.all %}
+								별점: {{ evaluation.starNumber }}<br/>
+								평가: {{ evaluation.note }}<br/>
+								<br/>
+								{% endfor %}
+
+		                    </div>
+		                    <div class = col-1></div>
+		                </div>
+						<br>
+						<div class="row">
+		    				<div class="col-8"></div>
+
+		                    <div class = col-4>
+		                    	<a href = "{% url 'mypage_receiver:approve' object.id %}" class="btn btn-outline-secondary">신청 수락</a>
+		                    </div>
+		                </div>
+						<br>
+
+		    			</div>
+		    			</div>
+	        </div>
+	    	<div class="col-1"></div>
+
+	</div>
+{% endblock %}

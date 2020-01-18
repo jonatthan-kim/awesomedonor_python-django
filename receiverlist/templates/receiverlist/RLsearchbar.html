@@ -1,0 +1,19 @@
+{% extends 'baseHF.html' %}
+{% load static %}
+{% block sidebar %}
+     <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div id="searchbar">
+                        <form action = "{% url 'receiverlist:search' %}" method="post" class="row" id="search-bar-row">
+                            {% csrf_token %}
+                            <input name = target type="text" class="col form-control" placeholder="기관명/기관주소검색" id="address">
+                            <button type="submit" style="background-color:#736663; color: white; font-size: 14px; border-radius:5px 5px 5px 5px;" id="address">&nbsp;검색&nbsp;</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-2">
+
+                </div>
+     </div>
+{% endblock %}

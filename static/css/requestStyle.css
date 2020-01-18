@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+
+#searchbar {
+    height: 35px;
+    background-color: ;
+}
+
+#search-bar-row {
+    margin: 20px 20px 0px 20px;
+}
+
+#specific-search {
+    height: 50px;
+    width: 88px;
+    background-color: ;
+    margin: 13px 0px 0px 0px;
+    font-size: 13px;
+    text-align: center;
+}
+
+#specificSearchbar {
+    margin: 0px 0px 0px 0px;
+    font-size: 11px;
+    
+}
+#filterbtn {
+    font-size: 13px;
+    text-align: right;
+}
+
+#categorybar {
+    margin: 10px 0px 0px 30px;
+    font-size: 13px;
+    width: 88px;
+    height: 400px;
+    background-color: ;
+}
+
+#categorytab {
+    margin: 10px 0px 0px 10px;
+    font-size: 12px;
+    float: left;
+    width: 96px;
+    text-align: center;
+}
+
+#address {
+    font-size: 13px;
+}
+
+#sp-form {
+    margin: 0px 0px 0px 160px;
+}
+
+#spsp {
+    height: 33px;
+}
+
+#formsizing {
+    width: 740px;
+    margin: 0px 0px 0px 130px;
+}
+
+#tablebox {
+    margin: 15px 10px 0px 0px;
+    text-align: center;
+    width: 100%;
+}
+
+#writesizing {
+    margin: 0px 0px 0px 60px;
+}

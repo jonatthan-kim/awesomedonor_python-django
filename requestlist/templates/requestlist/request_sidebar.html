@@ -1,0 +1,137 @@
+{% extends 'mypage_donor/sidemenu.html' %}
+{% load static %}
+
+{% block sidebar %}
+<div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div id="searchbar">
+                        <form action = "{% url 'requestlist:search' %}" method = 'post' class="row" id="search-bar-row">
+                            {% csrf_token %}
+                                <select name = search class="col-2 custom-select multiple" id="address" style="color:#403E38; width : 200px;">
+                                    <option value = 'both' selected>기관명&주소</option>
+                                    <option value='name'>기관명</option>
+                                    <option value='address'>주소</option>
+                                    <option value='progress'>후원진행상태</option>
+                                </select>
+                            <input name = target type="text" class="col form-control" placeholder="Search" id="address">
+                            <button type="submit" style="background-color:#736663; color: white; font-size: 14px; border-radius:5px 5px 5px 5px;" id="address">&nbsp;검색&nbsp;</button>
+                        </form>
+                </div>
+            </div>
+            <div class="col-2">
+                <div id="specific-search">
+                    <div class="list-group" id="list-tab" role="tablist" style = "width : 100px; height : 45px; ">
+                    </div>
+                </div>
+            </div>
+</div>
+<!-------------searchBar ----------------->
+<div class="row">
+<div class="col-*">
+                <div id="categorybar" style="width: 100px;">
+                    <div class="list-group" id="list-tab" role="tablist" >
+                        <a class="list-group-item list-group-item-action" id="list-cloth-list" data-toggle="list" href="#list-cloth" role="tab" aria-controls="cloth" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">의류</a>
+                        <a class="list-group-item list-group-item-action" id="list-baby-list" data-toggle="list" href="#list-baby" role="tab" aria-controls="baby" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">유아용품</a>
+                        <a class="list-group-item list-group-item-action" id="list-feminine-list" data-toggle="list" href="#list-feminine" role="tab" aria-controls="feminine" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">생리대</a>
+                        <a class="list-group-item list-group-item-action" id="list-beauty-list" data-toggle="list" href="#list-beauty" role="tab" aria-controls="beauty" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">화장품</a>
+                        <a class="list-group-item list-group-item-action" id="list-school-list" data-toggle="list" href="#list-school" role="tab" aria-controls="school" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">학용품</a>
+                        <a class="list-group-item list-group-item-action" id="list-book-list" data-toggle="list" href="#list-book" role="tab" aria-controls="book" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">도서</a>
+                        <a class="list-group-item list-group-item-action" id="list-domestic-list" data-toggle="list" href="#list-domestic" role="tab" aria-controls="domestic" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">가전제품</a>
+                        <a class="list-group-item list-group-item-action" id="list-daily-list" data-toggle="list" href="#list-daily" role="tab" aria-controls="daily" style="color:#403E38; background-image: url({% static 'img/배경.jpg' %});">생활용품</a>
+                        <a class="list-group-item list-group-item-action" id="list-furniture-list" data-toggle="list" href="#list-furniture" role="tab" aria-controls="furniture" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">가구침구</a>
+                    </div>
+                </div>
+        </div>
+        <div class="col-*">
+            <div id="categorytab">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade" id="list-cloth" role="tabpanel" aria-labelledby="list-cloth-list">
+                        <div class="list-group">
+                            <a href="{% url 'requestlist:FilterByMinCategory' '남녀정장' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">남녀정장</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '캐주얼' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">캐주얼</br>의류</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '청바지' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">청바지</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '목도리' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">목도리/</br>담요</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '속옷' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">속옷/양말</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '신발' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">신발/가방/장갑</a>
+                        </div>
+                    </div>
+                        <div class="tab-pane fade" id="list-baby" role="tabpanel" aria-labelledby="list-baby-list">
+                                <div class="list-group">
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '유모차' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">유모차</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '아기띠' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">아기띠</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '기저귀' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">기저귀</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '보습크림' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">보습크림</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '유아교구' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">유아교구/완구</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '분유' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">분유/</br>이유식</a>
+                                </div>
+                            </div>
+                        <div class="tab-pane fade" id="list-feminine" role="tabpanel" aria-labelledby="list-feminine-list">
+                            <div class="list-group">
+                                <a href="{% url 'requestlist:FilterByMinCategory' '일반생리대' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">일반생리대</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '면생리대' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">면생리대</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '오버나이트' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">오버나이트</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '위생팬티' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">위생팬티</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '여성청결제' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">여성청결제</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '생리대' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">생리대</br>파우치</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-beauty" role="tabpanel" aria-labelledby="list-beauty-list">
+                            <div class="list-group">
+                                <a href="{% url 'requestlist:FilterByMinCategory' '스킨' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">스킨/로션</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '바디로션' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">바디로션</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '마스크팩' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">마스크팩</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '클렌저' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">클렌저/</br>오일</a>
+                                <a href="{% url 'requestlist:FilterByMinCategory' '기능성' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">기능성</br>화장품</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-school" role="tabpanel" aria-labelledby="list-school-list">
+                                <div class="list-group">
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '볼펜' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">볼펜/연필</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '노트' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">노트/</br>메모지</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '색종이' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">색종이</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '크레파스' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">크레파스</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '색연필' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">색연필/</br>물감</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '필통' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">필통</a>
+                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-book" role="tabpanel" aria-labelledby="list-book-list">
+                                <div class="list-group">
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '새책' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">새책/</br>중고책</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '영어도서' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">영어도서/원서</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '아동도서' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">아동도서</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '전집류' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">전집류</a>
+                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-domestic" role="tabpanel" aria-labelledby="list-domestic-list">
+                                <div class="list-group">
+                                    <a href="{% url 'requestlist:FilterByMinCategory' 'TV' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">TV/모니터</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '스피커' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">스피커</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '소형가전' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">소형가전</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '핸드폰' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">핸드폰/</br>타블렛</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '악기' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">악기</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '컴퓨터' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">컴퓨터/</br>노트북</a>
+                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-daily" role="tabpanel" aria-labelledby="list-daily-list">
+                                <div class="list-group">
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '주방용품' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">주방용품/세제</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '샴푸' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">샴푸/</br>클렌저</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '마스크' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">마스크</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '치약' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">치약/칫솔</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '세제' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">세제</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '물티슈' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">물티슈</a>
+                                    <a href="{% url 'requestlist:FilterByMinCategory' '화장지' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">화장지</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-furniture" role="tabpanel" aria-labelledby="list-furniture-list">
+                            <a href="{% url 'requestlist:FilterByMinCategory' '이불' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">이불/</br>침낭</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '책상' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">책상/</br>의자</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '수납장' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">수납장/</br>책장</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '인테리어' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">인테리어</a>
+                            <a href="{% url 'requestlist:FilterByMinCategory' '매트' %}" class="list-group-item list-group-item-action" style="color:#403E38;background-image: url({% static 'img/배경.jpg' %});">매트/</br>러그</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

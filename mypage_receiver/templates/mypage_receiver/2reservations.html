@@ -1,0 +1,54 @@
+{% extends 'mypage_receiver/sidemenu.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block extra-script %}
+
+{% endblock %}
+
+{% block content %}
+<div class="col-9" id="right">
+	            <div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+	            <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 500px; border: 4px solid #B4A8A1; ">
+	            <div id="tablebox" style="width: 800px; height: 450px; margin: 25px 10px 10px 25px; color:#736663;">
+	            <div class="col text-center"><h4 style="color:#736663;">후원 예약 상세내역</h4></div>
+	            <div class = col id = wrapper style = "width : 100%; height : 420px; overflow:scroll;">
+	            <table class="table table-sm" style="font-size: 12px; color:#736663; text-align: center; ">
+	                <thead style=" background-color: #80716817">
+	                    <tr>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">이름</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">이메일</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">&nbsp;신청날짜&nbsp;</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">방문가능날짜</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">평가</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">자세히보기</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">신청수락</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	{% for object in object_list %}
+							<tr>
+							<th scope = row>{{ object.donor.name }}</th>
+							<td>{{ object.donor.user.username }}</td>
+							<td>{{ object.donationRequest.writeDate }}</td>
+							<td>{{ object.meetingDate }}</td>
+							<td>{{ object.donor.donorevaluation_set.all|length }}</td>
+							<td><a href = "{% url 'mypage_receiver:reservations_detail' object.id %}" class="btn btn-info btn-sm">자세히 보기</a></td><!--자세히 보기 -->
+							<td><a href = "{% url 'mypage_receiver:approve' object.id %}" class="btn btn-secondary btn-sm">신청 수락</a></td><!--자세히 보기 -->
+							</tr>
+						{% endfor %}
+
+	                </tbody>
+	            </table>
+	            </div>
+	            </div>
+	            </div>
+	        </div>
+	    	<div class="col-1"></div>
+
+	</div>
+{% endblock %}

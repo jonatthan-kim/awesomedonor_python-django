@@ -1,0 +1,84 @@
+{% extends 'baseHF.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-1"></div>
+		<div class="col-10">
+		{% if user.is_active %}
+			<div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+			<div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 600px; border: 4px solid #B4A8A1; ">
+				<div style="width: 800px; height: 450px; margin: 25px 10px 10px 25px; overflow:scroll;">
+					<div id=readQnABox>
+					<!-- 글읽기 박스 -->
+					<strong><h5>QnA</h5></strong><br>
+						&nbsp;&nbsp;제목 : {{ object.title }}<br><br>
+						&nbsp;&nbsp;작성자 : {% if object.member.user.is_staff %}
+                                                {{ object.member.name }}
+                                            {% else %}
+                                                {{ object.member.nickname }}
+                                            {% endif %}<br><br>
+
+						<div class="row">
+
+							<div class = 'col-2'>&nbsp;&nbsp;작성일 : </div>
+							<div class = 'col-4'>{{ object.writeDate }}</div>
+							<div class = 'col-2'>&nbsp;&nbsp;&nbsp;조횟수 : </div>
+							<div class = 'col-4'>{{ object.count }}</div>
+					</div><br>
+						&nbsp;&nbsp;내용 : <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;{{ object.content }}<br><br>
+
+						<a href="{% url 'qna:main' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">목록으로</a>
+						{% if object.member.user.id == user.id %}
+							<a href="{% url 'qna:update' object.id %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">수정</a>
+							<a href="{% url 'qna:delete' object.id %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">삭제</a>
+						{% endif %}
+					</div><!-- 글읽기 박스 종료 -->
+
+					<br><br><br>
+
+					<!-- 댓글읽기/쓰기 박스 -->
+                    <h5>댓글</h5>
+                    <form action="{% url 'qna:writecomment' object.id %}" method="post">
+						{% csrf_token %}
+						<span>
+                        <textarea rows="3" cols="77" name="content"></textarea>
+                        <button type="submit" class="btn btn-outline-secondary" style="text-align: right;">댓글달기</button>
+						</span>
+                    </form>
+					<br>
+					<div id="commentBox" style="height: 100px;overflow:scroll;">
+						{% if object.qnacomment_set.all %}
+							{% for comment in object.qnacomment_set.all %}
+								<div class = row>
+									<div class = col-2>
+										{% if comment.member.user.is_staff %}
+											{{ comment.member.name }}
+										{% else %}
+											{{ comment.member.nickname }}
+										{% endif %}
+									</div>
+									<div class = col-6 style="border:dotted #B4A8A1 1px;">
+										{{ comment.content }}
+									</div>
+									<div class="col-4">
+										{{ comment.writeDate }}
+									</div>
+								</div>
+								<br>
+							{% endfor %}
+						{% endif %}
+					</div><!-- 댓글읽기/쓰기 박스 종료.-->
+				</div>	<!-- 디자인보더 마진 종료. -->
+			</div>	<!-- 디자인보더 종료. -->
+			{% else %}
+				<br><br><br><br><br><br><br>
+				<p align="center">로그인 후 이용하실 수 있는 서비스입니다.</p><br>
+				<a href="{% url 'qna:main' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">목록으로</a>
+				<a href="{% url 'account:login' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">로그인</a>
+			{% endif %}
+		</div>	<!-- col-8 종료. -->
+		<div class="col-1"></div>
+	</div>	<!-- row 종료. -->
+{% endblock %}

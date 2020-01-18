@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{%load static %}
+{% block header %}
+<script type="text/javascript">
+    function logout(){
+           alert('로그아웃되었습니다!!');
+           window.location.href="{% url 'account:logout' %}";
+       }
+
+   function checkSession(is_active){
+	   if(is_active == "False"){
+	       alert('로그인을 해주세요!!');
+		   window.location.href="{% url 'account:login' %}";
+	   }else{
+	       window.location.href="{% url 'account:mypage' %}";
+	   }
+   }
+
+</script>
+<div class="row">
+        <div class="col-2">
+            <div id="logo">
+                <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" height="75" width="128"></a>
+            </div>
+        </div>
+        <div class="col-8"></div>
+        <div class="col-2">
+            <div id="login">
+            {% if user.is_active %}
+                <a href="#" style="color:#736663;"><img src="{% static 'img/메뉴바_로그아웃.png' %}" style="height: 22px; width: 138px;" onclick = "logout()"></a>
+            {% else %}
+                <a href="{% url 'account:login' %}" style="color:#736663;"><img src="{% static 'img/메뉴바_로그인.png' %}" style="height: 22px; width: 138px;"></a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div id="menubar">
+                <ul class="nav nav-pills nav-justified" id="menubar2">
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'intro1' %}" style="color:#736663;"><img src="{% static 'img/메뉴바_사이트소개.png' %}" style="width: 138px; height: 22px;"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'requestlist:main' %}" style="color:#736663;"><img src="{% static 'img/메뉴바_필요해요.png' %}" style="width: 138px; height: 22px;"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'receiverlist:main' %}" style="color:#736663;"><img src="{% static 'img/메뉴바_가입된 기관.png' %}" style="width: 138px; height: 22px;"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href = "{% url 'qna:main' %}" style="color:#736663;"><img src="{% static 'img/메뉴바_QnA.png' %}" style="width: 138px; height: 22px;" ></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href ="#" style="color:#736663;"><img src="{% static 'img/메뉴바_마이페이지.png' %}" style="width: 138px; height: 22px; color:#736663;" onclick = "checkSession('{{ user.is_active }}')"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

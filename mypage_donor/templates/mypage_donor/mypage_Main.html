@@ -1,0 +1,126 @@
+{% extends 'baseHF.html' %}
+{% load static %}
+{% block extra-style %}
+@font-face {
+	font-family: 'S-CoreDream-5Medium';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+	font-weight: 100;
+	font-style: normal;
+	}
+
+   body {
+   		background-image: url("${pageContext.request.contextPath}/resources/img/배경.jpg");
+   		font-family: 'S-CoreDream-5Medium';
+		}
+
+
+#bannerManaging {
+    width: 750px;
+    height: 130px;
+    background-color: rgb(219, 207, 203);
+    text-align: center;
+    line-height: 128px;
+    font-size: 30px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#receiverManaging {
+    width: 375px;
+    height: 250px;
+    background-color: #d3cec5;
+    float: left;
+    text-align: center;
+    line-height: 240px;
+    font-size: 30px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+#donorManaging {
+    width: 375px;
+    height: 250px;
+    float: left;
+    text-align: center;
+    line-height: 240px;
+    font-size: 30px;
+    background-color: #E6E0D7;
+    border-radius: 0px 0px 5px 5px;
+}
+
+#personalInfo {
+            width: 375px;
+            height: 180px;
+            background-color: rgb(173, 165, 162);
+            text-align: center;
+            line-height: 170px;
+            font-size: 30px;
+            border-radius: 5px 0px 0px 0px;
+            float: left;
+        }
+
+        #selection{
+            width: 375px;
+            height: 180px;
+            background-color: rgb(219, 207, 203);
+            text-align: center;
+            line-height: 170px;
+            font-size: 30px;
+            border-radius: 0px 5px 0px 0px;
+            float: left;
+        }
+
+        #receiverLike {
+            width: 375px;
+            height: 180px;
+            background-color: #d3cec5;
+            float: left;
+            text-align: center;
+            line-height: 170px;
+            font-size: 30px;
+            border-radius: 0px 0px 0px 5px;
+        }
+
+        #donationLog {
+            width: 375px;
+            height: 180px;
+            float: left;
+            text-align: center;
+            line-height: 170px;
+            font-size: 30px;
+            background-color: #E6E0D7;
+            border-radius: 0px 0px 5px 0px;
+        }
+
+        #managings {
+            margin: 60px 0px 0px 50px;
+        }
+{% endblock %}
+
+{% block content %}
+<div class=row>
+            <div class="col-1"></div>
+            <d  iv class="col-10">
+                <div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 50px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1; text-align:center;">
+                    <h4 style="padding-top:10px;">{{ user.member.name }}님 환영합니다</h4>
+                </div>
+                <div id="designBorder"
+                    style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 500px; border: 4px solid #B4A8A1; ">
+
+                    <div id="managings">
+                        <div id="personalInfo">
+                            <a href="{% url 'mypage_donor:pwpage' %}" style="color:#403E38;">개인정보 관리</a>
+                        </div>
+                        <div id="selection">
+                            <a href="{% url 'mypage_donor:selection' user.id %}" style="color:#403E38;">찜하기</a>
+                        </div>
+                        <div id="receiverLike">
+                            <a href="{% url 'mypage_donor:receiverLike' %}" style="color:#403E38;">관심기관</a>
+                        </div>
+                        <div id="donationLog">
+                            <a href="{% url 'mypage_donor:inprogress' %}" style="color:#403E38;">후원내역</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class = col-1></div>
+</div>
+{% endblock %}

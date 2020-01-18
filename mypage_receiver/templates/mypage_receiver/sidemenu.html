@@ -1,0 +1,30 @@
+{% extends 'baseHF.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block extra-style %}
+	.sideMenu{
+		position:absolute;
+		top:10%;
+	}
+{% endblock %}
+
+{% block extra-script %}
+
+{% endblock %}
+
+{% block sidebar %}
+<div class = row>
+   		<div class = "col-2">
+   			<div class="list-group sideMenu">
+                <a href="{% url 'mypage_receiver:pwpage' %}" class="list-group-item list-group-item-action" style="background-image: url({% static 'img/배경.jpg' %}); color:#736663;">개인정보 관리</a>
+                <a href="{% url 'mypage_receiver:myrequest' %}" class="list-group-item list-group-item-action" style="background-image: url({% static 'img/배경.jpg' %}); color:#736663;">예약신청현황</a>
+                <a href="{% url 'mypage_receiver:inprogress' %}" class="list-group-item list-group-item-action" style="background-image: url({% static 'img/배경.jpg' %}); color:#736663;">후원진행현황</a>
+                <a href="{% url 'mypage_receiver:ended' %}" class="list-group-item list-group-item-action" style="background-image: url({% static 'img/배경.jpg' %}); color:#736663;">후원완료내역</a>
+            </div>
+        </div>
+{% endblock %}

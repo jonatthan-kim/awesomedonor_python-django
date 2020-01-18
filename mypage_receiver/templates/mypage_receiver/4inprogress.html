@@ -1,0 +1,51 @@
+{% extends 'mypage_receiver/sidemenu.html' %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block extra-script %}
+
+{% endblock %}
+
+{% block content %}
+        <div class="col-9" id="right">
+	            <div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+	            <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 500px; border: 4px solid #B4A8A1; ">
+	            <div id="tablebox" style="width: 800px; height: 450px; margin: 25px 10px 10px 25px; color:#736663;">
+	            <div class="col text-center"><h4 style="color:#736663;">후원 진행 현황</h4></div>
+	            <div class = col id = wrapper style = "width : 100%; height : 420px; overflow:scroll;">
+	            <table class="table table-sm" style="font-size: 12px; color:#736663; text-align: center;">
+	                <thead style=" background-color: #80716817">
+	                    <tr>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">이름</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">이메일</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">방문가능날짜</th>
+	                    <th scope="col" style="font-size: 13px; color:#736663;">비고</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	{% for object in object_list %}
+							<tr>
+								<th scope = row>{{ object.donor.name }}</th><!-- 신청 물품 -->
+								<td>{{ object.donor.user.username }}</td> <!-- 이메일 -->
+								<td>{{ object.meetingDate }}</td><!-- 방문가능날짜 -->
+								<td><a href = "{% url 'mypage_receiver:reservations_detail' object.id %}" class="btn btn-info btn-sm">자세히 보기</a>
+									<a href = "{% url 'mypage_receiver:evaluation_complete' object.id %}" class="btn btn-primary btn-sm">후원 완료</a>
+									<a href = "{% url 'mypage_receiver:evaluation_incomplete' object.id %}" class="btn btn-danger btn-sm">후원 중지/미완료</a>
+								</td><!-- 자세히 보기, 후원 완료, 후원 중지 버튼 -->
+							</tr>
+						{% endfor %}
+
+	                </tbody>
+	            </table>
+	            </div>
+	            </div>
+	            </div>
+	        </div>
+	    <div class="col-1"></div>
+
+</div>
+{% endblock %}

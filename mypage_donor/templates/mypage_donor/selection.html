@@ -1,0 +1,200 @@
+{% extends 'mypage_donor/sidemenu.html' %}
+
+{% block title %}
+찜하기 페이지
+{% endblock %}
+
+{% block extra-style %}
+{{ block.super }}
+
+	#tag{
+		width:992px;
+		height:50px;
+		background-color: rgb(219, 207, 203);
+		text-align: center;
+	}
+
+	#tag h5{
+	position:relative;
+	top:30%;
+	color:#736663
+	}
+{% endblock %}
+
+{% block extra-script %}
+	 function value_submit(){
+
+		 console.log("aaa");
+
+         var frm1 = document.getElementById("f1");
+
+         console.log(frm1);
+         //1.값 담을 배열 선언...
+
+         var param_index = 1;
+         var param_names = [];
+         var param_values = [];
+
+
+         //2.check된 줄에서만 키,값 가져오기...
+<!--			if(frm1.elements[1].checked == false){-->
+<!--				alert("기부 항목에 체크를 해주세요!!");-->
+<!--				return;-->
+<!--			}-->
+        param_names[0] = 'csrfmiddlewaretoken'
+        param_values[0] = '{{ csrf_token }}'
+         for(i = 1 ; i < frm1.elements.length ; i++){
+
+             //계산 잘 할 것...폼에 첫번째 인풋이 체크박스라는 가정하에...
+
+             if(frm1.elements[i].checked == true && frm1.elements[i].type == "checkbox"){
+                 //체크 박스 값이 의미가 있으면 넣어 주고 아니면 패스...
+                 param_names[param_index] = frm1.elements[i].name;
+                 param_values[param_index] = frm1.elements[i].value;
+                 param_index++;
+
+                 //아래 UI 순서상 다음 폼 요소가 텍스트 박스임으로.. i++
+                 if( !frm1.elements[i+1].value||!frm1.elements[i+2].value){
+                     alert('폼을 완성해주세요!!');
+                     return;
+                 }
+
+                 i++;
+                 param_names[param_index] = frm1.elements[i].name;
+                 param_values[param_index] = frm1.elements[i].value;
+
+        		 //전화번호 정규식으로 체크 11.11 추가
+        		 var regEx =  /^[0-9]*$/;
+        		 var regResult = regEx.test(param_values[param_index]);
+                 if(!regResult){
+                	 alert("전화번호를 잘못 입력하셨습니다.");
+                	 frm1.elements[i].focus();
+                	 return;
+                 }
+
+                 param_index++;
+
+                 //그 다음 폼 요소 ... i++
+                 i++;
+                 param_names[param_index] = frm1.elements[i].name;
+                 param_values[param_index] = frm1.elements[i].value;
+
+                 //날짜 유효성 검사
+
+                 var date = document.getElementsByName(param_names[param_index]);
+                 if(date == null){
+					alert("날짜를 입력해 주십시오");
+					frm1.elements[i].focus();
+                	return;
+				 }
+
+                 param_index++;
+             }
+         }
+
+         //3.임의의 form 만들어서 배열에서 키,값 가져와서 다시 세팅 및 서브밋
+         var submitForm = document.createElement("form");
+         //폼 값 설정...
+         submitForm.setAttribute("charset","UTF-8");
+         submitForm.setAttribute("method","post"); //get,post ... (test)테스트 결과 URL에 보이기 위해 get 방식 사용했음
+         submitForm.setAttribute("action","{% url 'mypage_donor:reservation' %}");
+
+         //전달할 키,값들 임의의 폼에 입력 양식 hidden으로 추가..
+         for(i = 0 ; i < param_index ; i++){
+             var hiddenField = document.createElement("input");
+
+             hiddenField.setAttribute("type","hidden");
+             hiddenField.setAttribute("name",param_names[i]);
+             hiddenField.setAttribute("value",param_values[i]);
+
+             submitForm.appendChild(hiddenField);
+         }
+
+         //4.임의로 만든 폼 body에 추가 후 submit
+         document.body.appendChild(submitForm);
+
+         submitForm.submit();
+         //modal로 만든 다음에 이걸 실행되도록 만들기.
+
+     }
+{% endblock %}
+
+{% block content %}
+   		<div class="col-8">
+		<div id="upborder" style=" margin: 30px 0px 0px 0px; width: 1000px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+            <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 1000px; height: 750px; border: 4px solid #B4A8A1; ">
+            <div id="tablebox" style="width: 992px; height: 650px; margin: 0px 0px 0px 0px;">
+            	<div  id ="tag"><h5>찜하기</h5></div>
+            	<div style="height:300px; overflow:scroll;">
+            	<table class="table overflow-auto" style="font-size: 12px; color:#736663;  text-align: center;">
+                        <thead style=" background-color: #80716817">
+                            <tr>
+                                <th scope="col" style="font-size: 12px; color:#736663; width:10%;">구분</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;width:10%;">기관명</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;width:10%;">물품명</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;width:10%;">수량</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;">기관주소</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;">이용가능 연락처</th>
+                                <th scope="col" style="font-size: 12px; color:#736663;">후원예정일</th>
+                                <th scope="col" style="font-size: 12px; padding-right:7px; color:#736663;">예약취소</th>
+                            </tr>
+                        </thead>
+                       		 <tbody>
+	                             <form id="f1">
+                                     {% csrf_token %}
+		                            {% for object in object_list %}
+                                        {% if object.decided is False %}
+										<tr>
+											<th scope = row style="position:absolute; left:9%;"><input class="form-check-input" type="checkbox" name = "id" value="{{ object.id }}" id="defaultCheck1"></th><!-- 체크박스 -->
+											<td>{{ object.donationRequest.receiver.name }}{{ object.id }}</td> <!-- 기관 --><!-- 이하 수정해야함. -->
+											<td>{{ object.donationRequest.minorCategory }}</td><!-- 물품명 -->
+											<td>{{ object.donationRequest.amount }}</td><!-- 수량 -->
+											<td>{{ object.donationRequest.receiver.ad_category }} {{ object.donationRequest.receiver.ad_detail }}</td> <!-- 주소대분류+주소소분 -->
+											<td><input type = "text" name = "contactNumber" class="form-control" placeholder= "'-'를 빼고 입력하세요"></td>	<!-- 이용가능 연락 -->
+											<td><input type = "date" name = "meetingDate" class="form-control" placeholder="년-월-일"></td>	<!-- 체크박스 -->
+											<td><a class="btn btn-primary" href="{% url 'mypage_donor:delete_selection' object.id %}" role="button">❤︎︎</a></td>
+										</tr>
+                                        {% endif %}
+									{% endfor %}
+                                 </form>
+                        	</tbody>
+                    </table>
+                    </div>
+                    <input type="button" value="예약신청" style="float:right" onclick="value_submit()">
+                <br>
+                <br>
+
+				<!-- 이 밑은 신청 현황 테이블 -->
+				<div  id ="tag"><h5>신청한 기부</h5></div>
+				<div style="height:300px; overflow:scroll;">
+                    <table class="table overflow-auto" style="font-size: 12px; color:#736663; text-align: center;">
+                        <thead style=" background-color: #80716817">
+                            <tr>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">기관명</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">물품명</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">수량</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">기관주소</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">이용가능 연락처</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">후원예정일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+	                        	{% for reservation in reservations %}
+									<tr>
+										<td scope = row>{{ reservation.donationRequest.receiver.name }}</td> <!-- 기관 --><!-- 이하 수정해야함. -->
+										<td>{{ reservation.donationRequest.minorCategory }}</td><!-- 물품명 -->
+										<td>{{ reservation.donationRequest.amount }}</td><!-- 수량 -->
+										<td>{{ reservation.donationRequest.receiver.ad_category }} {{ reservation.donationRequest.receiver.ad_detail }}</td> <!-- 주소대분류+주소소분 -->
+										<td>{{ reservation.contactNumber }}</td>
+		                                <td>{{ reservation.meetingDate }}</td>
+									</tr>
+								{% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+            </div>
+            </div>
+            </div>
+		</div>
+{% endblock %}

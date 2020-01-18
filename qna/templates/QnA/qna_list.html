@@ -1,0 +1,96 @@
+{% extends 'baseHF.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8">
+
+			<!-- 디자인보더 위 업보더. 시작~끝. -->
+                <div id="upborder" style=" margin: 30px 0px 0px 0px; width: 850px; height: 20px; border-radius: 5px 5px 0px 0px; background-color:#B4A8A1;"></div>
+                <!-- 디자인보더 시작. -->
+                <div id="designBorder" style=" margin: 0px 0px 40px 0px; border-radius: 0px 0px 5px 5px; width: 850px; height: 500px; border: 4px solid #B4A8A1; ">
+                    <!-- 테이블박스 시작. -->
+                    <div id="tablebox" style="overflow:scroll; width: 800px; height: 400px; margin: 25px 10px 10px 25px;">
+
+                        <!-- 테이블 시작. -->
+                        <table class="table" style="font-size: 12px; color:#736663; text-align: center;">
+                            <!-- 테이블헤드 시작. -->
+                            <thead style="background-color: #80716817">
+                                <tr>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">글번호</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">제목</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">&nbsp;&nbsp;</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">&nbsp;&nbsp;닉네임&nbsp;&nbsp;</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">&nbsp;&nbsp;조회수&nbsp;&nbsp;</th>
+                                    <th scope="col" style="font-size: 13px; color:#736663;">&nbsp;날짜&nbsp;</th>
+                                </tr>
+                            </thead><!-- 테이블헤드 종료. -->
+
+                            <!-- 테이블 게시글 시작. -->
+                            <tbody>
+                                {% for object in object_list %}
+                                    <tr>
+                                        <td>{{ object.id }}</td>
+                                        <td>
+                                            <a href="{% url 'qna:detail' object.id %}">
+                                            {{ object.title }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            [ {{ object.qnacomment_set.all|length }} ]
+                                        </td>
+                                        <td>
+                                            {% if object.member.user.is_staff %}
+                                                {{ object.member.name }}
+                                            {% else %}
+                                                {{ object.member.nickname }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ object.count }}</td>
+                                        <td>{{ object.writeDate }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody><!-- 테이블 게시글 종료. -->
+                        </table>
+                        <div class = 'row'>
+                            <div class = col-4></div>
+                            <div class = col-4>
+                                <span>
+                                    <div class = 'row'>
+                                        <div class = col-3>
+                                            {% if page_obj.has_previous %}
+                                            <a href="?page={{ page_obj.previous_page_number }}">PrevPage</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class = col-6 style="text-align:center;">
+                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                        </div>
+                                        <div class = col-3>
+                                            {% if page_obj.has_next %}
+                                            <a href="?page={{ page_obj.next_page_number }}">NextPage</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </span>
+                            </div>
+                            <div class = col-4></div>
+                        </div>
+                    </div>	<!-- 테이블박스 종료. -->
+
+                    <!-- 목록으로, 내글보기, 글쓰기 -->
+<!--                    <a href="{% url 'qna:main' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 10px 0px 0px;">목록으로</a>-->
+                    {% if user.is_active %}
+                        <a href="{% url 'qna:myqna' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 30px 0px 0px;">내글보기</a>
+                    {% endif %}
+
+                    {% if user.is_active %}
+                        <a href="{% url 'qna:writeqna' %}" class="btn btn-outline-secondary" style="float: right; margin: 0px 30px 0px 0px;">글쓰기</a>
+                    {% endif %}
+
+                </div>	<!-- 디자인보더 종료. -->
+		    </div>	<!-- col-8 종료. -->
+            <div class="col-2"></div>
+
+</div>
+{% endblock %}
